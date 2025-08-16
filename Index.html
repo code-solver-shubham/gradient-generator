@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradient Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #00008b, #adff2f);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    section {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 25px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #mybtn {
+      background-color: #051937;
+      color: white;
+    }
+
+    #mybtn2 {
+      background-color: #008793;
+      color: white;
+    }
+
+    #copyBtn {
+      background-color: #ff9800;
+      color: white;
+    }
+
+    h2 {
+      margin-top: 15px;
+      font-size: 16.5px;
+      font-weight: 600;
+      text-transform: capitalize;
+      opacity: 0.9;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .copycode {
+      margin-top: 15px;
+      padding: 16px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      font-size: 17px;
+      color: white;
+      font-family: monospace;
+      user-select: all;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div>
+      <button id="mybtn">#00008b</button>
+      <button id="mybtn2">#adff2f</button>
+    </div>
+    <h2>Copy your gradient code here 👇</h2>      
+    <div class="copycode" id="codeBox">
+      background: linear-gradient(to right, #00008b, #adff2f);
+    </div>
+    <button id="copyBtn">Copy Code</button>
+  </section>
+
+  <script>
+    let btn1 = document.getElementById("mybtn");
+    let btn2 = document.getElementById("mybtn2");
+    let copydiv = document.getElementById("codeBox");
+    let copyBtn = document.getElementById("copyBtn");
+
+    // default colors
+    let rgb1 = "#00008b";
+    let rgb2 = "#adff2f";
+
+    // random hex color generator
+    const hexvalues = () => {
+      let hexa = "0123456789abcdef";
+      let colors = "#";
+      for (let i = 0; i < 6; i++) {
+        colors += hexa[Math.floor(Math.random() * 16)];
+      }
+      return colors;
+    }
+
+    // update background & code
+    const updateBackground = () => {
+      document.body.style.backgroundImage = `linear-gradient(to right, ${rgb1}, ${rgb2})`;
+      copydiv.innerText = `background: linear-gradient(to right, ${rgb1}, ${rgb2});`;
+    }
+
+    // first button - change rgb1
+    const handleBtn1 = () => {
+      rgb1 = hexvalues();
+      btn1.innerText = rgb1;
+      btn1.style.backgroundColor = rgb1;
+      updateBackground();
+    }
+
+    // second button - change rgb2
+    const handleBtn2 = () => {
+      rgb2 = hexvalues();
+      btn2.innerText = rgb2;
+      btn2.style.backgroundColor = rgb2;
+      updateBackground();
+    }
+
+    // copy code button
+    const handleCopy = () => {
+      navigator.clipboard.writeText(copydiv.innerText).then(() => {
+        copyBtn.innerText = "Copied ✅";
+        setTimeout(() => copyBtn.innerText = "Copy Code", 2000);
+      });
+    }
+
+    // events
+    btn1.addEventListener("click", handleBtn1);
+    btn2.addEventListener("click", handleBtn2);
+    copyBtn.addEventListener("click", handleCopy);
+  </script>
+</body>
+  </html>
